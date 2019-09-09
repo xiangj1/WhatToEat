@@ -1,8 +1,12 @@
 import * as React from 'react'
 
+import firebase from '../api/Firebase'
 
-const IndexPage = () => (
-  <h1>Joy is preaty</h1>
-)
+firebase
+  .auth()
+  .signInWithEmailAndPassword('xiangj1@outlook.com', 'Jx135790')
+  .then(console.log)
+
+const IndexPage = () => <h1>What to eat</h1>
 
 export default IndexPage
