@@ -24,10 +24,13 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
+    "2": "^2.0.0",
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.12",
     "babel-plugin-styled-components": "^1.10.1",
     "classnames": "^2.2.6",
+    "eslint-plugin-flowtype": "^2.50.3",
+    "firebase": "^6.6.0",
     "gatsby": "^2.10.0",
     "gatsby-image": "^2.2.1",
     "gatsby-plugin-canonical-urls": "^2.1.0",
@@ -52,6 +55,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
+    "styled-components": "^4.3.2",
     "typescript": "^3.5.2"
   },
   "devDependencies": {
@@ -62,7 +66,7 @@
     "@types/react-helmet": "^5.0.8",
     "@typescript-eslint/eslint-plugin": "^1.10.2",
     "@typescript-eslint/parser": "^1.10.2",
-    "eslint": "^6.0.0",
+    "eslint": "^5.16.0",
     "eslint-config-blvd": "^0.1.1",
     "eslint-config-prettier": "^5.0.0",
     "eslint-plugin-prettier": "^3.1.0",

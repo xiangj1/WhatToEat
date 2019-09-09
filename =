@@ -1,0 +1,10 @@
+
+> styled-components@4.3.2 postinstall /Users/od-011/Development/WhatToEat/node_modules/styled-components
+> node ./scripts/postinstall.js || exit 0
+
+Use styled-components at work? Consider supporting our development efforts at https://opencollective.com/styled-components
++ styled-components@4.3.2
++ 2@2.0.0
+added 40 packages from 14 contributors and audited 26969 packages in 27.319s
+found 0 vulnerabilities
+
