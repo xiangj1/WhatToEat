@@ -10,7 +10,7 @@ This is a starter kit for [Gatsby.js](https://www.gatsbyjs.org/) websites writte
 - ESLint (with custom ESLint rules)
 - Markdown rendering with Remark
 - Basic component structure
-- Styling with [emotion](https://emotion.sh/)
+
 
 ## Geting started
 
