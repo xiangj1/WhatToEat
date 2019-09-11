@@ -1,12 +1,26 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 
 import firebase from '../api/Firebase'
+import Client from '../api'
 
-firebase
-  .auth()
-  .signInWithEmailAndPassword('xiangj1@outlook.com', 'Jx135790')
-  .then(console.log)
+import SignInForm from '../components/SignInForm'
 
-const IndexPage = () => <h1>What to eat</h1>
+const client = Client()
 
-export default IndexPage
+function HomePage() {
+  const [signedIn, setSignedIn] = useState(false)
+
+  firebase.auth().onAuthStateChanged((user: firebase.User | null) => {
+    client.setUid(user ? user.uid : '')
+    setSignedIn(!!user)
+  })
+
+  return (
+    <div>
+      <h1>What To Eat</h1>
+      <SignInForm signedIn={signedIn} client={client} />
+    </div>
+  )
+}
+
+export default HomePage

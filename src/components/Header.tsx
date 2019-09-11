@@ -4,17 +4,12 @@ import { Theme } from '@material-ui/core'
 
 const styles = (theme: Theme) => ({
   root: {
-    display: 'flex',
+    display: 'flex'
   }
 })
 
-
-const Header = ({ classes }) => {
-  return (
-    <div className={classes.root}>
-      What to eat
-    </div>
-  )
+const Header = ({ classes }: any) => {
+  return <div className={classes.root}>What to eat</div>
 }
 
 export default withStyles(styles)(Header)
