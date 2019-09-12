@@ -9,7 +9,7 @@ interface SignInFormProps {
   client: Client
 }
 
-function SignInForm({ signedIn, client }: SignInFormProps) {
+const SignInForm: React.FC<SignInFormProps> = ({ signedIn, client }: SignInFormProps) => {
   const [credential, setCredential] = useState({ email: '', password: '' })
 
   function updateInput(field: string) {
