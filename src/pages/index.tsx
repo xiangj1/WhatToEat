@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 
+import Container from '@material-ui/core/Container'
+
 import firebase from '../api/Firebase'
 import Client from '../api'
 
 import SignInForm from '../components/SignInForm'
+import Header from '../components/Header'
 
 const client = Client()
 
@@ -17,8 +20,10 @@ function HomePage() {
 
   return (
     <div>
-      <h1>What To Eat</h1>
-      <SignInForm signedIn={signedIn} client={client} />
+      <Header />
+      <Container maxWidth="lg">
+        <SignInForm signedIn={signedIn} client={client} />
+      </Container>
     </div>
   )
 }
