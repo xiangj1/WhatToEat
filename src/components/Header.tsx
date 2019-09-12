@@ -1,15 +1,24 @@
 import React from 'react'
-import withStyles from '@material-ui/core/styles/withStyles'
-import { Theme } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography'
+import { makeStyles } from '@material-ui/core/styles'
 
-const styles = (theme: Theme) => ({
+const useStyles = makeStyles({
   root: {
-    display: 'flex'
+    width: '100%'
+    // maxWidth: 500
   }
 })
 
-const Header = ({ classes }: any) => {
-  return <div className={classes.root}>What to eat</div>
+const Header: React.FC = () => {
+  const classes = useStyles()
+
+  return (
+    <div className={classes.root}>
+      <Typography variant="h1" gutterBottom>
+        What To Eat
+      </Typography>
+    </div>
+  )
 }
 
-export default withStyles(styles)(Header)
+export default Header
