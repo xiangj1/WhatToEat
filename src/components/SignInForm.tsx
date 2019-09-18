@@ -1,69 +1,87 @@
-import React, { useState, ChangeEvent, FormEvent, MouseEvent, FunctionComponent } from 'react'
+import React, { useState, ChangeEvent, FormEvent } from 'react'
+
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import Modal from '@material-ui/core/Modal'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-import Client from '../api'
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    modal: {
+      top: '20%',
+      left: '40%',
+      width: '20%',
+      position: 'absolute',
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+    textField: {
+      margin: '2%',
+      display: 'block'
+    },
+    submitButton: {
+      margin: '2%',
+    },
+  })
+);
 
 interface SignInFormProps {
-  signedIn: boolean
-  client: Client
+  open: boolean
+  signIn(email: string, password: string): Promise<string>
 }
 
-const SignInForm: React.FC<SignInFormProps> = ({ signedIn, client }: SignInFormProps) => {
-  const [credential, setCredential] = useState({ email: '', password: '' })
+const SignInForm: React.FC<SignInFormProps> = ({ open, signIn }: SignInFormProps) => {
+  const classes = useStyles()
 
-  function updateInput(field: string) {
-    return (event: ChangeEvent<HTMLInputElement>) => {
-      event.preventDefault()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('')
 
-      setCredential({ ...credential, [field]: event.target.value })
-    }
+  function updateEmail(e: ChangeEvent<HTMLInputElement>) {
+    setEmail(e.target.value)
   }
 
-  function signIn(event: FormEvent<HTMLFormElement>) {
+  function updatePassword(e: ChangeEvent<HTMLInputElement>) {
+    setPassword(e.target.value)
+  }
+
+  function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    client.signIn(credential.email, credential.password).catch(alert)
+    signIn(email, password).catch(alert)
   }
 
-  function signOut(event: MouseEvent) {
-    event.preventDefault()
+  return (
+    <Modal open={open}>
+      <form onSubmit={submit} className={classes.modal}>
+        <TextField
+          required
+          label="Email"
+          type="email"
+          variant="outlined"
+          placeholder="me@example.com"
+          autoComplete="username"
+          onChange={updateEmail}
+          className={classes.textField}
+        />
 
-    client.signOut().catch(alert)
-  }
+        <TextField
+          required
+          label="Password"
+          type="password"
+          variant="outlined"
+          placeholder="password"
+          autoComplete="current-password"
+          onChange={updatePassword}
+          className={classes.textField}
+        />
 
-  return signedIn ? (
-    <Button variant="contained" color="primary" onClick={signOut}>
-      Sign Out
-    </Button>
-  ) : (
-    <form onSubmit={signIn}>
-      <TextField
-        required
-        label="Email"
-        type="email"
-        margin="normal"
-        variant="outlined"
-        placeholder="me@example.com"
-        autoComplete="username"
-        onChange={updateInput('email')}
-      />
-
-      <TextField
-        required
-        label="Password"
-        type="password"
-        margin="normal"
-        variant="outlined"
-        placeholder="password"
-        autoComplete="current-password"
-        onChange={updateInput('password')}
-      />
-
-      <Button type="submit" variant="contained" color="primary">
-        Sign In
-      </Button>
-    </form>
+        <Button type="submit" variant="contained" color="primary" className={classes.submitButton}>
+          Sign In
+        </Button>
+      </form>
+    </Modal>
   )
 }
 

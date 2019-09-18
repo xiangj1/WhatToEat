@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 /* Material-UI */
-import Container from '@material-ui/core/Container'
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,7 +10,6 @@ import firebase from '../api/Firebase'
 import Client from '../api'
 
 /* Component */
-import SignInForm from '../components/SignInForm'
 import Header from '../components/Header'
 
 const client = Client()
