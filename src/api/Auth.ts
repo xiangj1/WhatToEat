@@ -1,7 +1,9 @@
 import firebase from './Firebase'
 import 'firebase/auth'
 
-const auth = firebase.auth()
+let auth: firebase.auth.Auth
+
+if (typeof window !== 'undefined') auth = firebase.auth()
 
 async function signIn(email: string, password: string): Promise<string> {
   const userCredential: firebase.auth.UserCredential = await auth.signInWithEmailAndPassword(email, password)
