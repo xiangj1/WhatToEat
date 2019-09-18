@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Typography from '@material-ui/core/Typography'
 import makeStyles from '@material-ui/core/styles/makeStyles'
@@ -13,15 +13,15 @@ import SignInForm from './SignInForm'
 
 const useStyles = makeStyles({
   menuButton: {
-    marginRight: 2,
+    marginRight: 2
   },
   title: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   userInfo: {
     display: 'flex',
     alignItems: 'center'
-  },
+  }
 })
 
 interface HeaderProps {
@@ -31,14 +31,13 @@ interface HeaderProps {
   signOut(): Promise<void>
 }
 
-
-const Header: React.FC<HeaderProps> = ({signedIn, username, signIn, signOut}) => {
+const Header: React.FC<HeaderProps> = ({ signedIn, username, signIn, signOut }) => {
   const classes = useStyles()
 
   return (
-    <AppBar position="static" color='inherit'>
+    <AppBar position="static" color="inherit">
       <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu" className={classes.menuButton} >
+        <IconButton edge="start" color="inherit" className={classes.menuButton}>
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" className={classes.title}>
@@ -47,13 +46,14 @@ const Header: React.FC<HeaderProps> = ({signedIn, username, signIn, signOut}) =>
         {signedIn ? (
           <div className={classes.userInfo}>
             <Typography variant="body1">{username}</Typography>
-            <IconButton onClick={signOut} color="inherit"><ExitToAppIcon /></IconButton>
+            <IconButton onClick={signOut} color="inherit">
+              <ExitToAppIcon />
+            </IconButton>
           </div>
         ) : (
-            <Button>LOG IN</Button>
+          <SignInForm signIn={signIn} />
         )}
       </Toolbar>
-      <SignInForm open={!signedIn} signIn={signIn} />
     </AppBar>
   )
 }
