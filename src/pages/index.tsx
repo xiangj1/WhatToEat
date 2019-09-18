@@ -1,30 +1,45 @@
 import React, { useState } from 'react'
 
+/* Material-UI */
 import Container from '@material-ui/core/Container'
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
+/* API */
 import firebase from '../api/Firebase'
 import Client from '../api'
 
+/* Component */
 import SignInForm from '../components/SignInForm'
 import Header from '../components/Header'
 
 const client = Client()
 
-function HomePage() {
-  const [signedIn, setSignedIn] = useState(false)
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark', // Switching the dark mode on is a single property value change.
+  },
+});
 
-  firebase.auth().onAuthStateChanged((user: firebase.User | null) => {
-    client.setUid(user ? user.uid : '')
-    setSignedIn(!!user)
-  })
+function HomePage() {
+  const [init, setInit] = useState(true)
+  const [username, setUsername] = useState('')
+
+
+  if (init) {
+    firebase.auth().onAuthStateChanged((user: firebase.User | null) => {
+      client.setUid(user ? user.uid : '')
+      setUsername(user ? user.email || '' : '')
+    })
+    setInit(false)
+  }
 
   return (
-    <div>
-      <Header />
-      <Container maxWidth="lg">
-        <SignInForm signedIn={signedIn} client={client} />
-      </Container>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Header signedIn={!!username} signIn={client.signIn} signOut={client.signOut} username={username} />
+    </ThemeProvider>
   )
 }
 
