@@ -1,43 +1,57 @@
-import React from 'react'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
+import React, {Component} from 'react'
 
-import logo from '../logo.svg'
+import Typography from '@material-ui/core/Typography'
+import makeStyles from '@material-ui/core/styles/makeStyles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles({
-  header: {
-    width: '100%',
-    color: 'white',
-    display: 'block',
-    height: '72px',
-    padding: '8px 0'
+  menuButton: {
+    marginRight: 2,
   },
-  nav: {
-    margin: '0 auto',
-    padding: '0 30px',
-    position: 'relative',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
-    flexWrap: 'wrap'
+  title: {
+    flexGrow: 1,
   },
-  logo: {
-    height: '100%'
-  }
+  userInfo: {
+    display: 'flex',
+    alignItems: 'center'
+  },
 })
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  signedIn: boolean
+  username: string
+  signIn(email: string, password: string): Promise<string>
+  signOut(): Promise<void>
+}
+
+
+const Header: React.FC<HeaderProps> = ({signedIn, username, signOut}) => {
   const classes = useStyles()
 
   return (
-    <header className={classes.header}>
-      <nav className={classes.nav}>
-        <img src={logo} alt="logo" className={classes.logo} />
-        <Typography variant="overline" gutterBottom>
-          What To Eat
+    <AppBar position="static" color='inherit'>
+      <Toolbar>
+        <IconButton edge="start" color="inherit" aria-label="menu" className={classes.menuButton} >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" className={classes.title}>
+          What to Eat
         </Typography>
-      </nav>
-    </header>
+        {signedIn ? (
+          <div className={classes.userInfo}>
+            <Typography variant="body1">{username}</Typography>
+            <IconButton onClick={signOut} color="inherit"><ExitToAppIcon /></IconButton>
+          </div>
+        ) : (
+            <Button>LOG IN</Button>
+        )}
+      </Toolbar>
+    </AppBar>
   )
 }
 

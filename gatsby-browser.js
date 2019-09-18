@@ -1,3 +1,3 @@
-import './src/styles/global.css'
+// import './src/styles/global.css'
 
-import 'normalize.css'
+// import 'normalize.css'
