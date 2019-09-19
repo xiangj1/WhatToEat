@@ -13,6 +13,8 @@ interface Client {
   signOut(): Promise<void>
   addDish(dishInfo: Dish): Promise<string>
   getDishList(): Promise<Dish[]>
+  addTag(tag: string): Promise<string>
+  getTagList(): Promise<string[]>
 }
 
 function Client(): Client {
@@ -46,12 +48,27 @@ function Client(): Client {
     })
   }
 
+  async function addTag(tag: string): Promise<string> {
+    if (!uid) throw Error('User Not Signed In')
+    return database.addItem(uid, 'Tags', { id: Date.now(), name: tag })
+  }
+
+  async function getTagList(): Promise<string[]> {
+    if (!uid) throw Error('User Not Signed In')
+    const itemList = await database.getItemList(uid, 'Tags')
+    return itemList.map(({ name }: firebase.firestore.DocumentData) => {
+      return name
+    })
+  }
+
   return {
     setUid,
     signIn,
     signOut,
     addDish,
-    getDishList
+    getDishList,
+    addTag,
+    getTagList
   }
 }
 
