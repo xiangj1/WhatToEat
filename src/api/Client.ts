@@ -27,15 +27,18 @@ function Client(): Client {
   }
 
   async function signIn(email: string, password: string): Promise<string> {
+    console.log('signIn')
     setUid(await auth.signIn(email, password))
     return uid
   }
 
   async function signOut(): Promise<void> {
+    console.log('signOut')
     await auth.signOut()
   }
 
   async function addDish(dishInfo: Dish): Promise<string> {
+    console.log('addDish')
     if (!uid) throw Error('User Not Signed In')
     if (!dishInfo.id) throw Error('Dish ID required')
     if (!dishInfo.name) throw Error('Dish Name required')
@@ -43,6 +46,7 @@ function Client(): Client {
   }
 
   async function getDishList(): Promise<Dish[]> {
+    console.log('getDishList')
     if (!uid) throw Error('User Not Signed In')
     const itemList = await database.getItemList(uid, collectionName)
     return itemList.map(({ id, name, tags }: firebase.firestore.DocumentData) => {
@@ -51,12 +55,14 @@ function Client(): Client {
   }
 
   async function addTag(tag: string): Promise<string> {
+    console.log('addTag')
     if (!uid) throw Error('User Not Signed In')
     if (!tag) throw Error('Tag required')
     return database.addItem(uid, 'Tags', { id: Date.now(), name: tag })
   }
 
   async function getTagList(): Promise<string[]> {
+    console.log('getTagList')
     if (!uid) throw Error('User Not Signed In')
     const itemList = await database.getItemList(uid, 'Tags')
     return itemList.map(({ name }: firebase.firestore.DocumentData) => {

@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     addTag: {
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      margin: theme.spacing(0)
     }
   })
 )
@@ -29,15 +30,35 @@ interface DishAddDialogProps {
   getTagList(): Promise<string[]>
 }
 
+interface TagDict {
+  [tagName: string]: boolean
+}
+
 const DishAddDialog: React.FC<DishAddDialogProps> = ({ addDish, addTag, getTagList }) => {
   const classes = useStyles()
 
+  const [init, setInit] = useState(true)
+
   const [dialogOpen, setDialogOpen] = useState(false)
   const [name, setName] = useState('')
-  const [tags, setTags] = useState<string[]>([])
+  const [tagDict, setTagDict] = useState<TagDict>({})
 
   const [newTagShow, setNewTagShow] = useState(false)
   const [newTag, setNewTag] = useState('')
+
+  if (init && dialogOpen) {
+    setInit(false)
+    setName('')
+    getTagList()
+      .then((tagList: string[]) => {
+        const newTagDict: TagDict = {}
+        tagList.forEach((tagName: string) => {
+          newTagDict[tagName] = false
+        })
+        setTagDict(newTagDict)
+      })
+      .catch(alert)
+  }
 
   function openDialog() {
     setDialogOpen(true)
@@ -55,12 +76,11 @@ const DishAddDialog: React.FC<DishAddDialogProps> = ({ addDish, addTag, getTagLi
     setName(e.target.value)
   }
 
-  function updateTags(e: React.ChangeEvent<HTMLInputElement>) {
-    setTags([...tags, e.target.value])
-  }
-
   function addNewDish() {
+    const tags = Object.keys(tagDict).filter((tagName: string) => tagDict[tagName])
     addDish({ id: Date.now(), name, tags }).catch(alert)
+    setInit(true)
+    setDialogOpen(false)
   }
 
   function addNewTag(e: React.FormEvent<HTMLFormElement>) {
@@ -68,11 +88,22 @@ const DishAddDialog: React.FC<DishAddDialogProps> = ({ addDish, addTag, getTagLi
     addTag(newTag).catch(alert)
     setNewTag('')
     setNewTagShow(false)
+    setInit(true)
   }
 
   function updateNewTag(e: React.ChangeEvent<HTMLInputElement>) {
     setNewTag(e.target.value)
   }
+
+  function selectTag(tagName: string) {
+    return () => {
+      setTagDict({
+        ...tagDict,
+        [tagName]: !tagDict[tagName]
+      })
+    }
+  }
+
   return (
     <div>
       <IconButton onClick={openDialog}>
@@ -99,6 +130,12 @@ const DishAddDialog: React.FC<DishAddDialogProps> = ({ addDish, addTag, getTagLi
               <TextField value={newTag} onChange={updateNewTag} />
             </form>
           </div>
+
+          {Object.keys(tagDict).map(tagName => (
+            <Button key={tagName} variant={tagDict[tagName] ? 'outlined' : 'text'} onClick={selectTag(tagName)}>
+              {tagName}
+            </Button>
+          ))}
         </DialogContent>
         <DialogActions>
           <Button onClick={addNewDish}>ADD</Button>
