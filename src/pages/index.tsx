@@ -37,7 +37,13 @@ function HomePage() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header signedIn={!!username} signIn={client.signIn} signOut={client.signOut} username={username} />
-      <Body signedIn={!!username} addDish={client.addDish} getDishList={client.getDishList} />
+      <Body
+        signedIn={!!username}
+        addDish={client.addDish}
+        getDishList={client.getDishList}
+        addTag={client.addTag}
+        getTagList={client.getTagList}
+      />
     </ThemeProvider>
   )
 }

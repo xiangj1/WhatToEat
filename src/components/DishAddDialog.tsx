@@ -16,22 +16,16 @@ import { Dish } from '../types'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    rollButton: {
-      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-      borderRadius: '3px',
-      border: '0',
-      color: 'white',
-      height: '78px',
-      padding: '0 60px',
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .30)',
-      fontSize: 'larger'
+    addTag: {
+      display: 'flex',
+      alignItems: 'center'
     }
   })
 )
 
 interface DishAddDialogProps {
   addDish(dishInfo: Dish): Promise<string>
-  addTag(tag: string): Promise<void>
+  addTag(tag: string): Promise<string>
   getTagList(): Promise<string[]>
 }
 
@@ -42,12 +36,19 @@ const DishAddDialog: React.FC<DishAddDialogProps> = ({ addDish, addTag, getTagLi
   const [name, setName] = useState('')
   const [tags, setTags] = useState<string[]>([])
 
+  const [newTagShow, setNewTagShow] = useState(false)
+  const [newTag, setNewTag] = useState('')
+
   function openDialog() {
     setDialogOpen(true)
   }
 
   function closeDialog() {
     setDialogOpen(false)
+  }
+
+  function newTagSwitch() {
+    setNewTagShow(!newTagShow)
   }
 
   function updateName(e: React.ChangeEvent<HTMLInputElement>) {
@@ -58,6 +59,20 @@ const DishAddDialog: React.FC<DishAddDialogProps> = ({ addDish, addTag, getTagLi
     setTags([...tags, e.target.value])
   }
 
+  function addNewDish() {
+    addDish({ id: Date.now(), name, tags }).catch(alert)
+  }
+
+  function addNewTag(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    addTag(newTag).catch(alert)
+    setNewTag('')
+    setNewTagShow(false)
+  }
+
+  function updateNewTag(e: React.ChangeEvent<HTMLInputElement>) {
+    setNewTag(e.target.value)
+  }
   return (
     <div>
       <IconButton onClick={openDialog}>
@@ -75,18 +90,18 @@ const DishAddDialog: React.FC<DishAddDialogProps> = ({ addDish, addTag, getTagLi
             // className={classes.textField}
           />
 
-          <Typography variant="subtitle1">Tags</Typography>
-          <TextField
-            required
-            label="tag"
-            variant="outlined"
-            placeholder="password"
-            // onChange={updatePassword}
-            // className={classes.textField}
-          />
+          <div className={classes.addTag}>
+            <Typography variant="subtitle1">Tags</Typography>
+            <IconButton onClick={newTagSwitch}>
+              <AddCircleIcon />
+            </IconButton>
+            <form onSubmit={addNewTag} hidden={!newTagShow}>
+              <TextField value={newTag} onChange={updateNewTag} />
+            </form>
+          </div>
         </DialogContent>
         <DialogActions>
-          <Button>ADD</Button>
+          <Button onClick={addNewDish}>ADD</Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface DishSectionProps {
   addDish(dishInfo: Dish): Promise<string>
   getDishList(): Promise<Dish[]>
-  addTag(tag: string): Promise<void>
+  addTag(tag: string): Promise<string>
   getTagList(): Promise<string[]>
 }
 

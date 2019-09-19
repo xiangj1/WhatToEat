@@ -37,6 +37,8 @@ function Client(): Client {
 
   async function addDish(dishInfo: Dish): Promise<string> {
     if (!uid) throw Error('User Not Signed In')
+    if (!dishInfo.id) throw Error('Dish ID required')
+    if (!dishInfo.name) throw Error('Dish Name required')
     return database.addItem(uid, collectionName, dishInfo)
   }
 
@@ -50,6 +52,7 @@ function Client(): Client {
 
   async function addTag(tag: string): Promise<string> {
     if (!uid) throw Error('User Not Signed In')
+    if (!tag) throw Error('Tag required')
     return database.addItem(uid, 'Tags', { id: Date.now(), name: tag })
   }
 

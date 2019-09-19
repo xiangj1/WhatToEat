@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 
 import Typography from '@material-ui/core/Typography'
 import makeStyles from '@material-ui/core/styles/makeStyles'
-import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 
 import { Dish } from '../types'
@@ -19,7 +18,7 @@ interface BodyProps {
   signedIn: boolean
   addDish(dishInfo: Dish): Promise<string>
   getDishList(): Promise<Dish[]>
-  addTag(tag: string): Promise<void>
+  addTag(tag: string): Promise<string>
   getTagList(): Promise<string[]>
 }
 
