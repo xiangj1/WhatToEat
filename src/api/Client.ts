@@ -2,7 +2,7 @@ import database from './Firestore'
 import auth from './Auth'
 
 interface Dish extends firebase.firestore.DocumentData {
-  id: string | null
+  id: number
   name: string
   tags: string[]
 }

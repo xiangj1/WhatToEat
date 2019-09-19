@@ -11,6 +11,7 @@ import Client from '../api'
 
 /* Component */
 import Header from '../components/Header'
+import Body from '../components/Body'
 
 const client = Client()
 
@@ -36,6 +37,7 @@ function HomePage() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header signedIn={!!username} signIn={client.signIn} signOut={client.signOut} username={username} />
+      <Body signedIn={!!username} addDish={client.addDish} getDishList={client.getDishList} />
     </ThemeProvider>
   )
 }

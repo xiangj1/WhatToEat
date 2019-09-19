@@ -1,15 +1,13 @@
-
-
 module.exports = {
   siteMetadata: {
-    title: 'what-to-eat',
+    title: 'What To Eat',
     description: 'A starter kit for TypeScript-based Gatsby projects with sensible defaults.',
     keywords: 'gatsbyjs, gatsby, javascript, sample, something',
     siteUrl: 'https://gatsby-starter-typescript-plus.netlify.com',
     author: {
-      name: 'Resi Respati',
-      url: 'https://twitter.com/resir014',
-      email: 'resir014@gmail.com'
+      name: 'Xiang Jiang',
+      url: 'https://github.com/xiangj1',
+      email: 'xiangj1@outlook.com'
     }
   },
   plugins: [
