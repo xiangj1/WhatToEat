@@ -45,6 +45,11 @@ const DishSection: React.FC<DishSectionProps> = ({ addDish, removeDish, getDishL
     setInit(true)
   }
 
+  function letsRoll() {
+    const dish = dishList[Math.floor(Math.random() * dishList.length)]
+    alert(dish ? dish.name : '')
+  }
+
   if (init) {
     setInit(false)
     getDishList().then(setDishList)
@@ -52,7 +57,9 @@ const DishSection: React.FC<DishSectionProps> = ({ addDish, removeDish, getDishL
 
   return (
     <div>
-      <Button className={classes.rollButton}>Lets roll</Button>
+      <Button className={classes.rollButton} onClick={letsRoll}>
+        Lets roll
+      </Button>
 
       <Toolbar>
         <Typography variant="h6">Dish List</Typography>
