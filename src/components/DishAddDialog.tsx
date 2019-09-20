@@ -28,13 +28,14 @@ interface DishAddDialogProps {
   addDish(dishInfo: Dish): Promise<string>
   addTag(tag: string): Promise<string>
   getTagList(): Promise<string[]>
+  updateList(): void
 }
 
 interface TagDict {
   [tagName: string]: boolean
 }
 
-const DishAddDialog: React.FC<DishAddDialogProps> = ({ addDish, addTag, getTagList }) => {
+const DishAddDialog: React.FC<DishAddDialogProps> = ({ addDish, addTag, getTagList, updateList }) => {
   const classes = useStyles()
 
   const [init, setInit] = useState(true)
@@ -81,6 +82,7 @@ const DishAddDialog: React.FC<DishAddDialogProps> = ({ addDish, addTag, getTagLi
     addDish({ id: Date.now(), name, tags }).catch(alert)
     setInit(true)
     setDialogOpen(false)
+    updateList()
   }
 
   function addNewTag(e: React.FormEvent<HTMLFormElement>) {

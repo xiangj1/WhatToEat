@@ -2,7 +2,6 @@ import database from './Firestore'
 import auth from './Auth'
 
 interface Dish extends firebase.firestore.DocumentData {
-  id: number
   name: string
   tags: string[]
 }
@@ -40,7 +39,6 @@ function Client(): Client {
   async function addDish(dishInfo: Dish): Promise<string> {
     console.log('addDish')
     if (!uid) throw Error('User Not Signed In')
-    if (!dishInfo.id) throw Error('Dish ID required')
     if (!dishInfo.name) throw Error('Dish Name required')
     return database.addItem(uid, collectionName, dishInfo)
   }

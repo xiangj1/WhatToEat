@@ -21,7 +21,12 @@ async function getItemList(uid: string, collectionName: string): Promise<firebas
     .collection(collectionName)
     .get()
 
-  querySnapshot.forEach((document: firebase.firestore.QueryDocumentSnapshot) => itemList.push(document.data()))
+  querySnapshot.forEach((document: firebase.firestore.QueryDocumentSnapshot) =>
+    itemList.push({
+      id: document.id,
+      ...document.data()
+    })
+  )
 
   return itemList
 }

@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '78px',
       padding: '0 60px',
       boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .30)',
-      fontSize: 'larger'
+      fontSize: 'larger',
+      margin: theme.spacing(0)
     }
   })
 )
@@ -36,8 +37,17 @@ interface DishSectionProps {
 const DishSection: React.FC<DishSectionProps> = ({ addDish, getDishList, addTag, getTagList }) => {
   const classes = useStyles()
 
-  const testDish: Dish = { id: Date.now(), name: 'testDish', tags: ['tag1'] }
-  const [dishList, setDishList] = useState<Dish[]>([testDish])
+  const [init, setInit] = useState(true)
+  const [dishList, setDishList] = useState<Dish[]>([])
+
+  function updateList() {
+    setInit(true)
+  }
+
+  if (init) {
+    setInit(false)
+    getDishList().then(setDishList)
+  }
 
   return (
     <div>
@@ -45,7 +55,7 @@ const DishSection: React.FC<DishSectionProps> = ({ addDish, getDishList, addTag,
 
       <Toolbar>
         <Typography variant="h6">Dish List</Typography>
-        <DishAddDialog addDish={addDish} addTag={addTag} getTagList={getTagList} />
+        <DishAddDialog addDish={addDish} addTag={addTag} getTagList={getTagList} updateList={updateList} />
       </Toolbar>
 
       <DishList dishList={dishList} />
