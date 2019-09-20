@@ -27,12 +27,7 @@ const DishList: React.FC<DishListProps> = ({ dishList, removeDish, updateList })
     <List>
       {dishList.map((dish: Dish) => (
         <ListItem button key={dish.id}>
-          <ListItemText
-            primary={dish.name}
-            secondary={dish.tags.map(tag => (
-              <Typography>{tag}</Typography>
-            ))}
-          />
+          <ListItemText primary={dish.name} secondary={dish.tags.join(', ')} />
           <IconButton onClick={deleteDish(dish.id)}>
             <DeleteIcon />
           </IconButton>
