@@ -40,6 +40,7 @@ function HomePage() {
       <Body
         signedIn={!!username}
         addDish={client.addDish}
+        removeDish={client.removeDish}
         getDishList={client.getDishList}
         addTag={client.addTag}
         getTagList={client.getTagList}

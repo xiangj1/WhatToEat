@@ -12,6 +12,15 @@ async function addItem(uid: string, collectionName: string, value: firebase.fire
   return docRef.id
 }
 
+async function removeItem(uid: string, collectionName: string, documentID: string): Promise<void> {
+  return firestore
+    .collection('Users')
+    .doc(uid)
+    .collection(collectionName)
+    .doc(documentID)
+    .delete()
+}
+
 async function getItemList(uid: string, collectionName: string): Promise<firebase.firestore.DocumentData[]> {
   const itemList: firebase.firestore.DocumentData[] = []
 
@@ -23,8 +32,8 @@ async function getItemList(uid: string, collectionName: string): Promise<firebas
 
   querySnapshot.forEach((document: firebase.firestore.QueryDocumentSnapshot) =>
     itemList.push({
-      id: document.id,
-      ...document.data()
+      ...document.data(),
+      id: document.id
     })
   )
 
@@ -33,5 +42,6 @@ async function getItemList(uid: string, collectionName: string): Promise<firebas
 
 export default {
   addItem,
+  removeItem,
   getItemList
 }

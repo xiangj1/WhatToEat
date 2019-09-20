@@ -1,4 +1,5 @@
 export interface Dish extends firebase.firestore.DocumentData {
+  id: string
   name: string
   tags: string[]
 }

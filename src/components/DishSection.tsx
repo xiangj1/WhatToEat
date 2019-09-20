@@ -29,12 +29,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface DishSectionProps {
   addDish(dishInfo: Dish): Promise<string>
+  removeDish(dishID: string): Promise<void>
   getDishList(): Promise<Dish[]>
   addTag(tag: string): Promise<string>
   getTagList(): Promise<string[]>
 }
 
-const DishSection: React.FC<DishSectionProps> = ({ addDish, getDishList, addTag, getTagList }) => {
+const DishSection: React.FC<DishSectionProps> = ({ addDish, removeDish, getDishList, addTag, getTagList }) => {
   const classes = useStyles()
 
   const [init, setInit] = useState(true)
@@ -58,7 +59,7 @@ const DishSection: React.FC<DishSectionProps> = ({ addDish, getDishList, addTag,
         <DishAddDialog addDish={addDish} addTag={addTag} getTagList={getTagList} updateList={updateList} />
       </Toolbar>
 
-      <DishList dishList={dishList} />
+      <DishList dishList={dishList} removeDish={removeDish} updateList={updateList} />
     </div>
   )
 }

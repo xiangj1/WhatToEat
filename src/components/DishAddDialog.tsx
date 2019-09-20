@@ -79,7 +79,7 @@ const DishAddDialog: React.FC<DishAddDialogProps> = ({ addDish, addTag, getTagLi
 
   function addNewDish() {
     const tags = Object.keys(tagDict).filter((tagName: string) => tagDict[tagName])
-    addDish({ id: Date.now(), name, tags }).catch(alert)
+    addDish({ id: Date.now().toLocaleString(), name, tags }).catch(alert)
     setInit(true)
     setDialogOpen(false)
     updateList()

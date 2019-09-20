@@ -17,18 +17,21 @@ const useStyles = makeStyles({
 interface BodyProps {
   signedIn: boolean
   addDish(dishInfo: Dish): Promise<string>
+  removeDish(dishID: string): Promise<void>
   getDishList(): Promise<Dish[]>
   addTag(tag: string): Promise<string>
   getTagList(): Promise<string[]>
 }
 
-const Body: React.FC<BodyProps> = ({ signedIn, addDish, getDishList, addTag, getTagList }) => {
+const Body: React.FC<BodyProps> = ({ signedIn, addDish, removeDish, getDishList, addTag, getTagList }) => {
   const classes = useStyles()
 
   return (
     <Container className={classes.bodyContainer}>
       <Typography variant="h3">Its time to decide what should I eat today</Typography>
-      {signedIn && <DishSection addDish={addDish} getDishList={getDishList} addTag={addTag} getTagList={getTagList} />}
+      {signedIn && (
+        <DishSection addDish={addDish} removeDish={removeDish} getDishList={getDishList} addTag={addTag} getTagList={getTagList} />
+      )}
     </Container>
   )
 }
